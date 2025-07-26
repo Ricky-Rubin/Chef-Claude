@@ -1,4 +1,4 @@
-import { chef_logo } from "/chef-claude-icon.png"
+import chef_logo from "/chef-claude-icon.png"
 
 function Header() {
     return (
