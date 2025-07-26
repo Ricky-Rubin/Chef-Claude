@@ -39,4 +39,34 @@ form {
   align-items: center;
   justify-content: center;
   gap: 10px;
+  margin: 0px 10px;
+}
+
+.text-bar {
+  height: 40px;
+  border-radius: 7px;
+  padding-top: 1px;
+  padding-left: 8px;
+  font-size: 14px;
+  outline: none;
+  border: 1px solid black;
+  flex-grow: 1;
+  max-width: 430px;
+  min-width: 130px
+}
+
+.form-button {
+  width: 185px;
+  height: 40px;
+  color: #FAFAF8;
+  background-color: #141413;
+  border-radius: 7px;
+  font-weight: 600;
+  outline: none;
+  border: 1px solid;
+  font-size: 15px;
+}
+.form-button::before {
+  content: "+";
+  margin-right: 7px;
 }
