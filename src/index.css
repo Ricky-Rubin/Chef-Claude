@@ -40,6 +40,7 @@ form {
   justify-content: center;
   gap: 8px;
   margin: 0px 10px;
+  margin-bottom: -20px;
 }
 
 .text-bar {
@@ -70,4 +71,15 @@ form {
 .form-button::before {
   content: "+";
   margin-right: 7px;
+}
+
+.mapped {
+  width: 520px;
+  margin: auto;
+}
+
+.mapped > li {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 25px;
 }

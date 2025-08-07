@@ -1,5 +1,6 @@
 function Form() {
-    const array = ['Top', 'gun'];
+    const array = ['Potatoes', 'Chicken', 'Spinach'];
+    const mappedArray = array.map(item => <li>{item}</li>)
 
     function logSomething(event) {
         event.preventDefault();
@@ -17,17 +18,23 @@ function Form() {
             I guess that is the JS method since working with JavaScript
             is imperative and not declarative like react. 
 
-            The new FormData, event.currentTarget and the get method
+            The new FormData, event.currentTarget and the get method,
             which took the name attrubute of the input element seems to 
             be a method that works well with react STATE. 
         */
     }
 
     return (
-        <form onSubmit={logSomething}>
-            <input name="ingredient" type="text" id="text-bar" className="text-bar" placeholder="e.g. oregano"/>
-            <button className="form-button">Add Ingredient</button>
-        </form>
+        <>
+            <form onSubmit={logSomething}>
+                <input name="ingredient" type="text" id="text-bar" className="text-bar" placeholder="e.g. oregano"/>
+                <button className="form-button">Add Ingredient</button>
+            </form>
+
+            <div className="mapped">
+                {mappedArray}
+            </div>
+        </>
     )
 }
 
