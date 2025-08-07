@@ -1,13 +1,19 @@
+import React from "react";
+
 function Form() {
-    const array = ['Potatoes', 'Chicken', 'Spinach'];
+    const [array, setArray] = React.useState(['Potatoes', 'Chicken', 'Spinach']);
     const mappedArray = array.map(item => <li>{item}</li>)
 
     function logSomething(event) {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
         const addedIngredient = formData.get("ingredient");
-        array.push(addedIngredient);
-        console.log(array);
+        // array.push(addedIngredient);
+        // console.log(array);
+
+        setArray(function(prevArray) {
+            return [...prevArray, addedIngredient];
+        })
 
         /*
             const check = document.getElementById("text-bar");
@@ -21,6 +27,10 @@ function Form() {
             The new FormData, event.currentTarget and the get method,
             which took the name attrubute of the input element seems to 
             be a method that works well with react STATE. 
+
+            The .push method for arrays doesn't work in REACT like it 
+            does in JS. The goal is to add a new element to the array and 
+            the best way to do that is to use react state. 
         */
     }
 
