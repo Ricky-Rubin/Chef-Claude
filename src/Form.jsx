@@ -4,15 +4,11 @@ function Form() {
     const [array, setArray] = React.useState(['Potatoes', 'Chicken', 'Spinach']);
     const mappedArray = array.map(item => <li>{item}</li>)
 
-    function logSomething(event) {
-        event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-        const addedIngredient = formData.get("ingredient");
-        // array.push(addedIngredient);
-        // console.log(array);
+    function addIngredient(formData) {
+        const ingredient = formData.get("ingredient")
 
         setArray(function(prevArray) {
-            return [...prevArray, addedIngredient];
+            return [...prevArray, ingredient];
         })
 
         /*
@@ -31,12 +27,18 @@ function Form() {
             The .push method for arrays doesn't work in REACT like it 
             does in JS. The goal is to add a new element to the array and 
             the best way to do that is to use react state. 
+
+            An even better method to handle forms in react is by makiing
+            the action attribute of the form equalt to a function that handles
+            everything, including the preventDefault that stops the page from 
+            refreshing after every submit action takes place. This new form 
+            method also reduces the lines of code and it will be used here. 
         */
     }
 
     return (
         <>
-            <form onSubmit={logSomething}>
+            <form action={addIngredient}>
                 <input name="ingredient" type="text" id="text-bar" className="text-bar" placeholder="e.g. oregano"/>
                 <button className="form-button">Add Ingredient</button>
             </form>
