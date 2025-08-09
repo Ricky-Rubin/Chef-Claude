@@ -1,7 +1,7 @@
 import React from "react";
 
 function Form() {
-    const [array, setArray] = React.useState(['Potatoes', 'Chicken', 'Spinach']);
+    const [array, setArray] = React.useState([]);
     const mappedArray = array.map(item => <li>{item}</li>)
 
     function addIngredient(formData) {
@@ -43,8 +43,20 @@ function Form() {
                 <button className="form-button">Add Ingredient</button>
             </form>
 
-            <div className="mapped">
-                {mappedArray}
+            <div className="section">
+                <h1 className="header-one">Ingredients on hand:</h1>
+                <div className="mapped">
+                    {mappedArray}
+                </div>
+
+                <div className="action-area">
+                    <div>
+                        <h2>Ready for a recipe?</h2>
+                        <p className="generate-text">Gnerate a recipe from your list of ingredients.</p>
+                    </div>
+
+                    <button className="recipe-button">Get a recipe</button>
+                </div>
             </div>
         </>
     )
