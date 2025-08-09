@@ -43,7 +43,7 @@ function Form() {
                 <button className="form-button">Add Ingredient</button>
             </form>
 
-            <div className="section">
+            {array.length > 0 ? <div className="section">
                 <h1 className="header-one">Ingredients on hand:</h1>
                 <div className="mapped">
                     {mappedArray}
@@ -57,7 +57,7 @@ function Form() {
 
                     <button className="recipe-button">Get a recipe</button>
                 </div>
-            </div>
+            </div> : null}
         </>
     )
 }
