@@ -49,14 +49,14 @@ function Form() {
                     {mappedArray}
                 </div>
 
-                <div className="action-area">
+                {array.length > 3 ? <div className="action-area">
                     <div>
                         <h2>Ready for a recipe?</h2>
                         <p className="generate-text">Gnerate a recipe from your list of ingredients.</p>
                     </div>
 
                     <button className="recipe-button">Get a recipe</button>
-                </div>
+                </div> : null}
             </div> : null}
         </>
     )
