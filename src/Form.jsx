@@ -1,5 +1,6 @@
 import React from "react";
 import { ClaudeRecipe } from "/src/ClaudeRecipe.jsx"
+import { IngredientsList } from "/src/IngredientsList.jsx"
 
 function Form() {
     const [array, setArray] = React.useState([]);
@@ -51,7 +52,7 @@ function Form() {
                 <button className="form-button">Add Ingredient</button>
             </form>
 
-            {array.length > 0 ? <div className="section">
+            {/* {array.length > 0 ? <div className="section">
                 <h1 className="header-one">Ingredients on hand:</h1>
                 <div className="mapped">
                     {mappedArray}
@@ -65,7 +66,9 @@ function Form() {
 
                     <button className="recipe-button" onClick={getRecipeButtonState}>Get a recipe</button>
                 </div> : null}
-            </div> : null}
+            </div> : null} */}
+
+            <IngredientsList map={mappedArray} clickButton={getRecipeButtonState} theArray={array}/>
 
             {recipeShown ? <ClaudeRecipe /> : null}
         </>
