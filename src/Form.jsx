@@ -1,12 +1,14 @@
 import React from "react";
 import { ClaudeRecipe } from "/src/ClaudeRecipe.jsx"
 import { IngredientsList } from "/src/IngredientsList.jsx"
+import { getRecipeFromMistral } from "/src/ai.js" 
 
 function Form() {
     const [array, setArray] = React.useState([]);
-    const mappedArray = array.map(item => <li key={item}>{item}</li>)
-    
     const [recipeShown, setRecipeShown] = React.useState(false)
+    const [text, setText] = React.useState("")
+
+    const mappedArray = array.map(item => <li key={item}>{item}</li>)
 
     function addIngredient(formData) {
         const ingredient = formData.get("ingredient")
@@ -40,9 +42,21 @@ function Form() {
         */
     }
 
-    function getRecipeButtonState() {
+    async function getRecipeButtonState() {
         setRecipeShown(prevBoolean => !prevBoolean);
-        console.log(recipeShown);
+        const fetchRecipe = await getRecipeFromMistral(array)
+        setText(fetchRecipe)
+
+        //   try {
+        //     // call your backend route, send the array as query params or body
+        //     const response = await fetch(`/api/chef_claude?recipe=${array.join(",")}`);
+        //     const data = await response.json();
+
+        //     setText(data); // or setText(data.recipe) depending on API response
+        // } catch (err) {
+        //     console.error("Error fetching recipe:", err);
+        //     setText("Something went wrong, please try again.");
+        // }
     }
 
     return (
@@ -70,7 +84,7 @@ function Form() {
 
             <IngredientsList map={mappedArray} clickButton={getRecipeButtonState} theArray={array}/>
 
-            {recipeShown ? <ClaudeRecipe /> : null}
+            {recipeShown ? <ClaudeRecipe fromAi={text}/> : null}
         </>
     )
 }

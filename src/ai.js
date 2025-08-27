@@ -8,7 +8,7 @@ not to include too many extra ingredients. Format your response in markdown to m
 to render to a web page
 `
 
-const hf = new InferenceClient(process.env.CHEF_CLUADE_KEY)
+const hf = new InferenceClient(import.meta.env.VITE_CHEF_CLAUDE_KEY)
 
 export async function getRecipeFromMistral(ingredientsArr) {
     const ingredientsString = ingredientsArr.join(", ")
@@ -24,5 +24,30 @@ export async function getRecipeFromMistral(ingredientsArr) {
         return response.choices[0].message.content
     } catch (err) {
         console.error(err.message)
+        return "Sorry, I couldn't generate a recipe right now. Please try again."
     }
 }
+
+
+
+
+
+// Remove the Hugging Face imports and system prompt - no longer needed here
+// export async function getRecipeFromMistral(ingredientsArr) {
+//     const ingredientsString = ingredientsArr.join(", ")
+//     try {
+//         const response = await fetch('/api/chef_claude', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify({ ingredients: ingredientsString })
+//         });
+        
+//         const data = await response.json();
+//         return data.recipe;
+//     } catch (err) {
+//         console.error(err.message)
+//         return "Sorry, I couldn't generate a recipe right now. Please try again."
+//     }
+// }
