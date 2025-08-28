@@ -80,6 +80,8 @@ export default async function handler(req, res) {
       max_tokens: 1024,
     });
 
+    console.log(response);
+
     res.status(200).json({ recipe: response.choices[0].message.content });
   } catch (error) {
     res.status(500).json({ error: error.message || "Something went wrong" });
