@@ -69,9 +69,10 @@ to render to a web page
 export default async function handler(req, res) {
   try {
     const { ingredients } = req.query; // frontend will pass ?ingredients=tomato,onion,garlic,pepper
+    console.log("API key exists:", !!process.env.CHEF_CLAUDE_KEY);
     const hf = new InferenceClient(process.env.CHEF_CLAUDE_KEY);
 
-    const response = await hf.textGeneration({
+    const response = await hf.chatCompletion({
       model: "mistralai/Mistral-7B-Instruct-v0.3",
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
@@ -79,8 +80,6 @@ export default async function handler(req, res) {
       ],
       max_tokens: 1024,
     });
-
-    console.log(response);
 
     res.status(200).json({ recipe: response.choices[0].message.content });
   } catch (error) {
