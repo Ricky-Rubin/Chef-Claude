@@ -55,7 +55,7 @@ export default async function handler(req, res) {
     const hf = new InferenceClient(API_KEY);
     
     const response = await hf.chatCompletion({
-      model: "mistralai/Mistral-7B-Instruct-v0.3",
+      model: "google/flan-t5-base",
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
         { role: "user", content: `I have ${ingredients}. Please give me a recipe you'd recommend I make!` },
