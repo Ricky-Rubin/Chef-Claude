@@ -1,32 +1,32 @@
-import { InferenceClient } from '@huggingface/inference'
+// import { InferenceClient } from '@huggingface/inference'
 
-const SYSTEM_PROMPT = `
-You are an assistant that receives a list of ingredients that a user has and suggests a recipe they 
-could make with some or all of those ingredients. You don't need to use every ingredient they 
-mention in your recipe. The recipe can include additional ingredients they didn't mention, but try 
-not to include too many extra ingredients. Format your response in markdown to make it easier 
-to render to a web page
-`
+// const SYSTEM_PROMPT = `
+// You are an assistant that receives a list of ingredients that a user has and suggests a recipe they 
+// could make with some or all of those ingredients. You don't need to use every ingredient they 
+// mention in your recipe. The recipe can include additional ingredients they didn't mention, but try 
+// not to include too many extra ingredients. Format your response in markdown to make it easier 
+// to render to a web page
+// `
 
-const hf = new InferenceClient(import.meta.env.VITE_CHEF_CLAUDE_KEY)
+// const hf = new InferenceClient(import.meta.env.VITE_CHEF_CLAUDE_KEY)
 
-export async function getRecipeFromMistral(ingredientsArr) {
-    const ingredientsString = ingredientsArr.join(", ")
-    try {
-        const response = await hf.chatCompletion({
-            model: "mistralai/Mistral-7B-Instruct-v0.3",
-            messages: [
-                { role: "system", content: SYSTEM_PROMPT },
-                { role: "user", content: `I have ${ingredientsString}. Please give me a recipe you'd recommend I make!` },
-            ],
-            max_tokens: 1024,
-        })
-        return response.choices[0].message.content
-    } catch (err) {
-        console.error(err.message)
-        return "Sorry, I couldn't generate a recipe right now. Please try again."
-    }
-}
+// export async function getRecipeFromMistral(ingredientsArr) {
+//     const ingredientsString = ingredientsArr.join(", ")
+//     try {
+//         const response = await hf.chatCompletion({
+//             model: "mistralai/Mistral-7B-Instruct-v0.3",
+//             messages: [
+//                 { role: "system", content: SYSTEM_PROMPT },
+//                 { role: "user", content: `I have ${ingredientsString}. Please give me a recipe you'd recommend I make!` },
+//             ],
+//             max_tokens: 1024,
+//         })
+//         return response.choices[0].message.content
+//     } catch (err) {
+//         console.error(err.message)
+//         return "Sorry, I couldn't generate a recipe right now. Please try again."
+//     }
+// }
 
 //THE BLOCK OF CODE ABOVE SHOULD BE ACTIVATED/UNCOMMENTED TO MAKE THE WEB APP RUN AS 
 //EXPECTED WHEN DEPLOYED LOCALLY i.e npm run dev 
@@ -54,3 +54,22 @@ export async function getRecipeFromMistral(ingredientsArr) {
 //         return "Sorry, I couldn't generate a recipe right now. Please try again."
 //     }
 // }
+
+// FROM CHAT GPT
+
+export async function getRecipeFromMistral(ingredientsArr) {
+  const ingredientsString = ingredientsArr.join(", ");
+  try {
+    const response = await fetch(`/api/chef_claude?ingredients=${encodeURIComponent(ingredientsString)}`);
+    const data = await response.json();
+
+    if (data.recipe) {
+      return data.recipe;
+    } else {
+      return "Sorry, I couldn't generate a recipe right now. Please try again.";
+    }
+  } catch (err) {
+    console.error(err.message);
+    return "Sorry, I couldn't generate a recipe right now. Please try again.";
+  }
+}
