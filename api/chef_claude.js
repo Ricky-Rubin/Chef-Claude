@@ -71,7 +71,7 @@ export default async function handler(req, res) {
     const { ingredients } = req.query; // frontend will pass ?ingredients=tomato,onion,garlic,pepper
     const hf = new InferenceClient(process.env.CHEF_CLAUDE_KEY);
 
-    const response = await hf.chatCompletion({
+    const response = await hf.textGeneration({
       model: "mistralai/Mistral-7B-Instruct-v0.3",
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
