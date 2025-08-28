@@ -49,41 +49,28 @@ to render to a web page
 
 export default async function handler(req, res) {
   try {
-    if (req.method !== "POST") {
-      return res.status(405).json({ error: "Method not allowed" });
-    }
-
-    const body = await new Promise((resolve, reject) => {
-      let data = "";
-      req.on("data", chunk => {
-        data += chunk;
-      });
-      req.on("end", () => {
-        try {
-          resolve(JSON.parse(data));
-        } catch (err) {
-          reject(err);
-        }
-      });
-    });
-
-    const { ingredients } = body;
+    const { ingredients } = req.body; // This should work fine
     const API_KEY = process.env.CHEF_CLAUDE_KEY;
-
+    
     const hf = new InferenceClient(API_KEY);
-
+    
     const response = await hf.chatCompletion({
       model: "mistralai/Mistral-7B-Instruct-v0.3",
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
-        { role: "user", content: `I have ${ingredients}. Please give me a recipe!` },
+        { role: "user", content: `I have ${ingredients}. Please give me a recipe you'd recommend I make!` },
       ],
       max_tokens: 1024,
     });
 
     res.status(200).json({ recipe: response.choices[0].message.content });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Could not generate recipe" });
+    console.error("Full error object:", error);
+    console.error("Error message:", error.message);
+    res.status(500).json({ 
+      error: "Could not generate recipe", 
+      details: error.message,
+      errorType: error.constructor.name
+    });
   }
 }
